@@ -1,31 +1,45 @@
 import java.util.Scanner;
 
+enum Error {
+    EmptyError, NullError;
+}
+
 public class MoodAnalyzer {
-    String message;
-    public MoodAnalyzer(String message)
-    {
-        this.message=message;
+    String message=null;
+    public Error error;
+
+    public MoodAnalyzer(String message) {
+        this.message = message;
     }
-    public MoodAnalyzer()
-    {
-        this.message="";
+
+    public MoodAnalyzer() {
+        this.message = "";
     }
+
     public String analyzeMood() {
         try {
-            for (int position = 0; position < message.length(); position++) {
-                String s = "" + message.charAt(position) + message.charAt(position + 1) + message.charAt(position + 2);
-                if (s.equalsIgnoreCase("SAD")) {
-                    return "Sad";
+            if (message != null) {
+                for (int position = 0; position < message.length(); position++) {
+                    if (position == message.length() - 2) {
+                        this.error = Error.EmptyError;
+                        throw new MoodAnalysisException();
+                    }
+                    String s = "" + message.charAt(position) + message.charAt(position + 1) + message.charAt(position + 2);
+                    if (s.equalsIgnoreCase("SAD")) {
+                        return "Sad";
+                    } else if (s.equalsIgnoreCase("Hap") && position < message.length() - 2) {
+                        String str = s + message.charAt(position + 3) + message.charAt(position + 4);
+                        if (str.equalsIgnoreCase("Happy"))
+                            return "Happy";
+                    }
                 }
             }
-        } catch (StringIndexOutOfBoundsException e) {
-            return "Happy";
+            this.error = Error.NullError;
+            throw new MoodAnalysisException();
+        } catch (MoodAnalysisException e) {
+            System.out.println(error);
+            return "Invalid Mood";
         }
-        catch(NullPointerException e)
-        {
-            return "Null";
-        }
-        return "Happy";
     }
 
     public static void main(String[] args) {
@@ -33,5 +47,11 @@ public class MoodAnalyzer {
         System.out.println("Enter the mood");
         String message = scanner.nextLine();
         MoodAnalyzer m = new MoodAnalyzer(message);
+    }
+}
+
+class MoodAnalysisException extends Exception {
+    public MoodAnalysisException() {
+        System.out.println("Invalid Mood");
     }
 }

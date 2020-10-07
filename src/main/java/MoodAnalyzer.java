@@ -21,6 +21,10 @@ public class MoodAnalyzer {
         } catch (StringIndexOutOfBoundsException e) {
             return "Happy";
         }
+        catch(NullPointerException e)
+        {
+            return "Null";
+        }
         return "Happy";
     }
 

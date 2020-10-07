@@ -13,4 +13,9 @@ MoodAnalyzer m;
         m=new MoodAnalyzer("I am in Any mood");
         Assert.assertEquals(m.analyzeMood(), "Happy");
     }
+    @Test
+    public void test2AnalyzeMoodWhenNull() {
+        m=new MoodAnalyzer();
+        Assert.assertEquals(m.analyzeMood(), "Happy");
+    }
 }

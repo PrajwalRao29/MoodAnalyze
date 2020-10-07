@@ -1,7 +1,16 @@
 import java.util.Scanner;
 
 public class MoodAnalyzer {
-    public String analyzeMood(String message) throws ArrayIndexOutOfBoundsException {
+    String message;
+    public MoodAnalyzer(String message)
+    {
+        this.message=message;
+    }
+    public MoodAnalyzer()
+    {
+        this.message="";
+    }
+    public String analyzeMood() {
         try {
             for (int position = 0; position < message.length(); position++) {
                 String s = "" + message.charAt(position) + message.charAt(position + 1) + message.charAt(position + 2);
@@ -9,7 +18,7 @@ public class MoodAnalyzer {
                     return "Sad";
                 }
             }
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (StringIndexOutOfBoundsException e) {
             return "Happy";
         }
         return "Happy";
@@ -17,9 +26,8 @@ public class MoodAnalyzer {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        MoodAnalyzer m = new MoodAnalyzer();
         System.out.println("Enter the mood");
         String message = scanner.nextLine();
-        String mood = m.analyzeMood(message);
+        MoodAnalyzer m = new MoodAnalyzer(message);
     }
 }

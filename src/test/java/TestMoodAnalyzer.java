@@ -16,7 +16,7 @@ public class TestMoodAnalyzer {
     }
 
     @Test
-    public void test3AnalyzeMoodWhenEmpty() {
+    public void test3AnalyzeMoodWhenempty() {
         m = new MoodAnalyzer("I am in Any mood");
         Assert.assertEquals(m.analyzeMood(), "Invalid Mood");
     }

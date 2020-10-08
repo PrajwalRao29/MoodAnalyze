@@ -13,33 +13,33 @@ public class MoodAnalyzer {
     }
 
     public MoodAnalyzer() {
-        this.message = "";
+        this.message = null;
     }
 
     public String analyzeMood() {
         try {
-            if (message != null) {
-                for (int position = 0; position < message.length(); position++) {
-                    if (position == message.length() - 2) {
-                        this.error = Error.EmptyError;
-                        throw new MoodAnalysisException();
-                    }
-                    String s = "" + message.charAt(position) + message.charAt(position + 1) + message.charAt(position + 2);
-                    if (s.equalsIgnoreCase("SAD")) {
-                        return "Sad";
-                    } else if (s.equalsIgnoreCase("Hap") && position < message.length() - 2) {
-                        String str = s + message.charAt(position + 3) + message.charAt(position + 4);
-                        if (str.equalsIgnoreCase("Happy"))
-                            return "Happy";
-                    }
+            if(message==null)
+            {
+                this.error=Error.NullError;
+                throw new MoodAnalysisException();
                 }
+            else if(message.contains("sad"))
+            {
+                return "Sad";
             }
-            this.error = Error.NullError;
-            throw new MoodAnalysisException();
+            else if(message.contains("happy"))
+            {
+                return "Happy";
+            }
+            else if(message==" ") {
+                this.error = Error.EmptyError;
+                throw new MoodAnalysisException();
+            }
         } catch (MoodAnalysisException e) {
             System.out.println(error);
             return "Invalid Mood";
         }
+        return "Invalid Mood";
     }
 
     public static void main(String[] args) {
